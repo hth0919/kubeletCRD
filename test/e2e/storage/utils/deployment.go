@@ -45,7 +45,7 @@ import (
 // - the paths inside the container are either fixed
 //   and don't need to be patch (for example, --csi-address=/csi/csi.sock is
 //   okay) or are specified directly in a parameter (for example,
-//   --kubelet-registration-path=/var/lib/kubelet/plugins/csi-hostpath/csi.sock)
+//   --kubelet-registration-path=/var/lib/keti-kubelet/plugins/csi-hostpath/csi.sock)
 //
 // Driver deployments that are different will have to do the patching
 // without this function, or skip patching entirely.
@@ -60,7 +60,7 @@ func PatchCSIDeployment(f *framework.Framework, o PatchCSIOptions, object interf
 		for i := range volumes {
 			volume := &volumes[i]
 			if volume.HostPath != nil {
-				// Update paths like /var/lib/kubelet/plugins/<provisioner>.
+				// Update paths like /var/lib/keti-kubelet/plugins/<provisioner>.
 				p := &volume.HostPath.Path
 				dir, file := path.Split(*p)
 				if file == o.OldDriverName {
@@ -76,7 +76,7 @@ func PatchCSIDeployment(f *framework.Framework, o PatchCSIOptions, object interf
 			if rename {
 				for e := range container.Args {
 					// Inject test-specific provider name into paths like this one:
-					// --kubelet-registration-path=/var/lib/kubelet/plugins/csi-hostpath/csi.sock
+					// --kubelet-registration-path=/var/lib/keti-kubelet/plugins/csi-hostpath/csi.sock
 					container.Args[e] = strings.Replace(container.Args[e], "/"+o.OldDriverName+"/", "/"+o.NewDriverName+"/", 1)
 				}
 			}

@@ -47,7 +47,7 @@ const (
 // Serial because the test restarts Kubelet
 var _ = framework.KubeDescribe("Device Plugin [Feature:DevicePluginProbe][NodeFeature:DevicePluginProbe][Serial]", func() {
 	f := framework.NewDefaultFramework("device-plugin-errors")
-	testDevicePlugin(f, "/var/lib/kubelet/plugins_registry")
+	testDevicePlugin(f, "/var/lib/keti-kubelet/plugins_registry")
 })
 
 func testDevicePlugin(f *framework.Framework, pluginSockDir string) {

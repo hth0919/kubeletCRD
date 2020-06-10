@@ -1013,6 +1013,7 @@ func (kl *Kubelet) HandlePodCleanups() error {
 	}
 
 	allPods, mirrorPods := kl.podManager.GetPodsAndMirrorPods()
+
 	// Pod phase progresses monotonically. Once a pod has reached a final state,
 	// it should never leave regardless of the restart policy. The statuses
 	// of such pods should not be changed, and there is no need to sync them.
@@ -1048,19 +1049,17 @@ func (kl *Kubelet) HandlePodCleanups() error {
 	for _, pod := range runningPods {
 		var continueFlag bool
 		for _, rpod := range rp.Items {
-			//klog.Infoln("POD : ", pod.Name, "RPOD : ", rpod.Name )
 			if pod.Name == rpod.Name {
-				//klog.Infoln("POD MATCHED")
 				continueFlag = true
 				break
 			}else {
-				//klog.Infoln("POD UNMATCHED")
 				continueFlag = false
 			}
 		}
 		if continueFlag {
 			if _, found := desiredPods[pod.ID]; !found {
 				kl.podKillingCh <- &kubecontainer.PodPair{APIPod: nil, RunningPod: pod}
+				continueFlag = false
 			}
 		}
 	}

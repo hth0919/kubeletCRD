@@ -18,6 +18,7 @@ package nodelease
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	coordinationv1 "k8s.io/api/coordination/v1"
@@ -50,6 +51,7 @@ type Controller interface {
 }
 
 type controller struct {
+	sync.Mutex
 	client                     clientset.Interface
 	leaseClient                coordclientset.LeaseInterface
 	holderIdentity             string
@@ -98,6 +100,8 @@ func (c *controller) sync() {
 		// If at some point other agents will also be frequently updating the Lease object, this
 		// can result in performance degradation, because we will end up with calling additional
 		// GET/PUT - at this point this whole "if" should be removed.
+		c.Lock()
+		defer c.Unlock()
 		err := c.retryUpdateLease(c.newLease(c.latestLease))
 		if err == nil {
 			return

@@ -70,7 +70,7 @@ func TestMakeMountsWindows(t *testing.T) {
 	podVolumes := kubecontainer.VolumeMap{
 		"disk":  kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "c:/mnt/disk"}},
 		"disk4": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "c:/mnt/host"}},
-		"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "c:/var/lib/kubelet/podID/volumes/empty/disk5"}},
+		"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "c:/var/lib/keti-kubelet/podID/volumes/empty/disk5"}},
 		"disk6": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: `/mnt/disk6`}},
 		"disk7": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: `\mnt\disk7`}},
 		"pipe1": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: `\\.\pipe\pipe1`}},
@@ -111,7 +111,7 @@ func TestMakeMountsWindows(t *testing.T) {
 		{
 			Name:           "disk5",
 			ContainerPath:  "c:/mnt/path5",
-			HostPath:       "c:/var/lib/kubelet/podID/volumes/empty/disk5",
+			HostPath:       "c:/var/lib/keti-kubelet/podID/volumes/empty/disk5",
 			ReadOnly:       false,
 			SELinuxRelabel: false,
 		},

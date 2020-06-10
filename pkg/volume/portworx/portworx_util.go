@@ -311,7 +311,7 @@ func (util *portworxVolumeUtil) getPortworxDriver(volumeHost volume.VolumeHost) 
 //   This is required to force certain operations (mount, unmount, detach, attach) to
 //   go to the volume host instead of the k8s service which might route it to any host. This pertains to how
 //   Portworx mounts and attaches a volume to the running container. The node getting these requests needs to
-//   see the pod container mounts (specifically /var/lib/kubelet/pods/<pod_id>)
+//   see the pod container mounts (specifically /var/lib/keti-kubelet/pods/<pod_id>)
 func (util *portworxVolumeUtil) getLocalPortworxDriver(volumeHost volume.VolumeHost) (volumeapi.VolumeDriver, error) {
 	if util.portworxClient != nil {
 		// check if existing saved client is valid

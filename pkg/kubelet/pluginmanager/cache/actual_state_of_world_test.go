@@ -28,7 +28,7 @@ import (
 // Verifies PluginExistsWithCorrectTimestamp returns true for the plugin
 func Test_ASW_AddPlugin_Positive_NewPlugin(t *testing.T) {
 	pluginInfo := PluginInfo{
-		SocketPath: "/var/lib/kubelet/device-plugins/test-plugin.sock",
+		SocketPath: "/var/lib/keti-kubelet/device-plugins/test-plugin.sock",
 		Timestamp:  time.Now(),
 	}
 	asw := NewActualStateOfWorld()
@@ -84,7 +84,7 @@ func Test_ASW_RemovePlugin_Positive(t *testing.T) {
 	// First, add a plugin
 	asw := NewActualStateOfWorld()
 	pluginInfo := PluginInfo{
-		SocketPath: "/var/lib/kubelet/device-plugins/test-plugin.sock",
+		SocketPath: "/var/lib/keti-kubelet/device-plugins/test-plugin.sock",
 		Timestamp:  time.Now(),
 	}
 	err := asw.AddPlugin(pluginInfo)
@@ -114,7 +114,7 @@ func Test_ASW_PluginExistsWithCorrectTimestamp_Negative_WrongTimestamp(t *testin
 	// First, add a plugin
 	asw := NewActualStateOfWorld()
 	pluginInfo := PluginInfo{
-		SocketPath: "/var/lib/kubelet/device-plugins/test-plugin.sock",
+		SocketPath: "/var/lib/keti-kubelet/device-plugins/test-plugin.sock",
 		Timestamp:  time.Now(),
 	}
 	err := asw.AddPlugin(pluginInfo)
@@ -124,7 +124,7 @@ func Test_ASW_PluginExistsWithCorrectTimestamp_Negative_WrongTimestamp(t *testin
 	}
 
 	newerPlugin := PluginInfo{
-		SocketPath: "/var/lib/kubelet/device-plugins/test-plugin.sock",
+		SocketPath: "/var/lib/keti-kubelet/device-plugins/test-plugin.sock",
 		Timestamp:  time.Now(),
 	}
 	// Check PluginExistsWithCorrectTimestamp returns false

@@ -611,6 +611,7 @@ func (ds *dockerService) applySandboxResources(hc *dockercontainer.HostConfig, l
 
 // makeSandboxDockerConfig returns dockertypes.ContainerCreateConfig based on runtimeapi.PodSandboxConfig.
 func (ds *dockerService) makeSandboxDockerConfig(c *runtimeapi.PodSandboxConfig, image string) (*dockertypes.ContainerCreateConfig, error) {
+	klog.Infoln("makeSandboxDockerConfig...")
 	// Merge annotations and labels because docker supports only labels.
 	labels := makeLabels(c.GetLabels(), c.GetAnnotations())
 	// Apply a label to distinguish sandboxes from regular containers.

@@ -352,13 +352,13 @@ func TestVolumeUnmapsFromDeletedPodWithForceOption(c clientset.Interface, f *fra
 	nodeIP = nodeIP + ":22"
 
 	// Creating command to check whether path exists
-	podDirectoryCmd := fmt.Sprintf("ls /var/lib/kubelet/pods/%s/volumeDevices/*/ | grep '.'", clientPod.UID)
+	podDirectoryCmd := fmt.Sprintf("ls /var/lib/keti-kubelet/pods/%s/volumeDevices/*/ | grep '.'", clientPod.UID)
 	if isSudoPresent(nodeIP, framework.TestContext.Provider) {
 		podDirectoryCmd = fmt.Sprintf("sudo sh -c \"%s\"", podDirectoryCmd)
 	}
 	// Directories in the global directory have unpredictable names, however, device symlinks
 	// have the same name as pod.UID. So just find anything with pod.UID name.
-	globalBlockDirectoryCmd := fmt.Sprintf("find /var/lib/kubelet/plugins -name %s", clientPod.UID)
+	globalBlockDirectoryCmd := fmt.Sprintf("find /var/lib/keti-kubelet/plugins -name %s", clientPod.UID)
 	if isSudoPresent(nodeIP, framework.TestContext.Provider) {
 		globalBlockDirectoryCmd = fmt.Sprintf("sudo sh -c \"%s\"", globalBlockDirectoryCmd)
 	}
@@ -700,5 +700,5 @@ func findMountPoints(hostExec HostExec, node *v1.Node, dir string) []string {
 
 // FindVolumeGlobalMountPoints returns all volume global mount points on the node of given pod.
 func FindVolumeGlobalMountPoints(hostExec HostExec, node *v1.Node) sets.String {
-	return sets.NewString(findMountPoints(hostExec, node, "/var/lib/kubelet/plugins")...)
+	return sets.NewString(findMountPoints(hostExec, node, "/var/lib/keti-kubelet/plugins")...)
 }

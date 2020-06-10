@@ -174,12 +174,12 @@ func waitForPathToExistInternal(devicePath *string, maxRetries int, deviceTransp
 	return false
 }
 
-// make a directory like /var/lib/kubelet/plugins/kubernetes.io/iscsi/iface_name/portal-some_iqn-lun-lun_id
+// make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/iscsi/iface_name/portal-some_iqn-lun-lun_id
 func makePDNameInternal(host volume.VolumeHost, portal string, iqn string, lun string, iface string) string {
 	return filepath.Join(host.GetPluginDir(iscsiPluginName), "iface-"+iface, portal+"-"+iqn+"-lun-"+lun)
 }
 
-// make a directory like /var/lib/kubelet/plugins/kubernetes.io/iscsi/volumeDevices/iface_name/portal-some_iqn-lun-lun_id
+// make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/iscsi/volumeDevices/iface_name/portal-some_iqn-lun-lun_id
 func makeVDPDNameInternal(host volume.VolumeHost, portal string, iqn string, lun string, iface string) string {
 	return filepath.Join(host.GetVolumeDevicePluginDir(iscsiPluginName), "iface-"+iface, portal+"-"+iqn+"-lun-"+lun)
 }
@@ -476,7 +476,7 @@ func globalPDPathOperation(b iscsiDiskMounter) func(iscsiDiskMounter, string, *I
 			// If the volumeMode is 'Block', plugin don't need to format the volume.
 			return func(b iscsiDiskMounter, devicePath string, util *ISCSIUtil) (string, error) {
 				globalPDPath := b.manager.MakeGlobalVDPDName(*b.iscsiDisk)
-				// Create dir like /var/lib/kubelet/plugins/kubernetes.io/iscsi/volumeDevices/{ifaceName}/{portal-some_iqn-lun-lun_id}
+				// Create dir like /var/lib/keti-kubelet/plugins/kubernetes.io/iscsi/volumeDevices/{ifaceName}/{portal-some_iqn-lun-lun_id}
 				if err := os.MkdirAll(globalPDPath, 0750); err != nil {
 					klog.Errorf("iscsi: failed to mkdir %s, error", globalPDPath)
 					return "", err
@@ -501,7 +501,7 @@ func globalPDPathOperation(b iscsiDiskMounter) func(iscsiDiskMounter, string, *I
 			klog.Infof("iscsi: %s already mounted", globalPDPath)
 			return devicePath, nil
 		}
-		// Create dir like /var/lib/kubelet/plugins/kubernetes.io/iscsi/{ifaceName}/{portal-some_iqn-lun-lun_id}
+		// Create dir like /var/lib/keti-kubelet/plugins/kubernetes.io/iscsi/{ifaceName}/{portal-some_iqn-lun-lun_id}
 		if err := os.MkdirAll(globalPDPath, 0750); err != nil {
 			klog.Errorf("iscsi: failed to mkdir %s, error", globalPDPath)
 			return "", err

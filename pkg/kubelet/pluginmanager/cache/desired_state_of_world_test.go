@@ -27,7 +27,7 @@ import (
 // Verifies newly added plugin returns true for PluginExists()
 func Test_DSW_AddOrUpdatePlugin_Positive_NewPlugin(t *testing.T) {
 	dsw := NewDesiredStateOfWorld()
-	socketPath := "/var/lib/kubelet/device-plugins/test-plugin.sock"
+	socketPath := "/var/lib/keti-kubelet/device-plugins/test-plugin.sock"
 	err := dsw.AddOrUpdatePlugin(socketPath)
 	// Assert
 	if err != nil {
@@ -54,7 +54,7 @@ func Test_DSW_AddOrUpdatePlugin_Positive_NewPlugin(t *testing.T) {
 // Verifies newly added plugin returns true for PluginExists()
 func Test_DSW_AddOrUpdatePlugin_Positive_ExistingPlugin(t *testing.T) {
 	dsw := NewDesiredStateOfWorld()
-	socketPath := "/var/lib/kubelet/device-plugins/test-plugin.sock"
+	socketPath := "/var/lib/keti-kubelet/device-plugins/test-plugin.sock"
 	// Adding the plugin for the first time
 	err := dsw.AddOrUpdatePlugin(socketPath)
 	if err != nil {
@@ -118,7 +118,7 @@ func Test_DSW_AddOrUpdatePlugin_Negative_PluginMissingInfo(t *testing.T) {
 func Test_DSW_RemovePlugin_Positive(t *testing.T) {
 	// First, add a plugin
 	dsw := NewDesiredStateOfWorld()
-	socketPath := "/var/lib/kubelet/device-plugins/test-plugin.sock"
+	socketPath := "/var/lib/keti-kubelet/device-plugins/test-plugin.sock"
 	err := dsw.AddOrUpdatePlugin(socketPath)
 	// Assert
 	if err != nil {

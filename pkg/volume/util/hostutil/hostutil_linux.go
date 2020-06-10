@@ -211,12 +211,12 @@ func DoMakeRShared(path string, mountInfoFilename string) error {
 	}
 
 	klog.V(2).Infof("Bind-mounting %q with shared mount propagation", path)
-	// mount --bind /var/lib/kubelet /var/lib/kubelet
+	// mount --bind /var/lib/keti-kubelet /var/lib/keti-kubelet
 	if err := syscall.Mount(path, path, "" /*fstype*/, syscall.MS_BIND, "" /*data*/); err != nil {
 		return fmt.Errorf("failed to bind-mount %s: %v", path, err)
 	}
 
-	// mount --make-rshared /var/lib/kubelet
+	// mount --make-rshared /var/lib/keti-kubelet
 	if err := syscall.Mount(path, path, "" /*fstype*/, syscall.MS_SHARED|syscall.MS_REC, "" /*data*/); err != nil {
 		return fmt.Errorf("failed to make %s rshared: %v", path, err)
 	}

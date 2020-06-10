@@ -209,7 +209,7 @@ func getHostExternalAddress(client clientset.Interface, p *v1.Pod) (externalAddr
 func checkPodCleanup(c clientset.Interface, pod *v1.Pod, expectClean bool) {
 	timeout := 5 * time.Minute
 	poll := 20 * time.Second
-	podDir := filepath.Join("/var/lib/kubelet/pods", string(pod.UID))
+	podDir := filepath.Join("/var/lib/keti-kubelet/pods", string(pod.UID))
 	mountDir := filepath.Join(podDir, "volumes", "kubernetes.io~nfs")
 	// use ip rather than hostname in GCE
 	nodeIP, err := getHostExternalAddress(c, pod)

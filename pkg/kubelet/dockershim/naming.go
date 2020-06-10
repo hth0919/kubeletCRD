@@ -43,7 +43,7 @@ import (
 
 const (
 	// kubePrefix is used to identify the containers/sandboxes on the node managed by kubelet
-	kubePrefix = "k8s"
+	kubePrefix = "keti"
 	// sandboxContainerName is a string to include in the docker container so
 	// that users can easily identify the sandboxes.
 	sandboxContainerName = leaky.PodInfraContainerName

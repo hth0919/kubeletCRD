@@ -70,7 +70,7 @@ const (
 	// Kubelet internal cgroup name for node allocatable cgroup.
 	defaultNodeAllocatableCgroup = "kubepods"
 	// defaultPodResourcesPath is the path to the local endpoint serving the podresources GRPC service.
-	defaultPodResourcesPath    = "/var/lib/kubelet/pod-resources"
+	defaultPodResourcesPath    = "/var/lib/keti-kubelet/pod-resources"
 	defaultPodResourcesTimeout = 10 * time.Second
 	defaultPodResourcesMaxSize = 1024 * 1024 * 16 // 16 Mb
 )

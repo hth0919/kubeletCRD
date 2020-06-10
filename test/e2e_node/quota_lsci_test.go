@@ -46,7 +46,7 @@ func runOneQuotaTest(f *framework.Framework, quotasRequested bool) {
 	// TODO: remove hardcoded kubelet volume directory path
 	// framework.TestContext.KubeVolumeDir is currently not populated for node e2e
 	// As for why we do this: see comment below at isXfs.
-	if isXfs("/var/lib/kubelet") {
+	if isXfs("/var/lib/keti-kubelet") {
 		useUnderLimit = 50 /* Mb */
 	}
 	priority := 0
@@ -58,7 +58,7 @@ func runOneQuotaTest(f *framework.Framework, quotasRequested bool) {
 			defer withFeatureGate(LSCIQuotaFeature, quotasRequested)()
 			// TODO: remove hardcoded kubelet volume directory path
 			// framework.TestContext.KubeVolumeDir is currently not populated for node e2e
-			if quotasRequested && !supportsQuotas("/var/lib/kubelet") {
+			if quotasRequested && !supportsQuotas("/var/lib/keti-kubelet") {
 				// No point in running this as a positive test if quotas are not
 				// enabled on the underlying filesystem.
 				framework.Skipf("Cannot run LocalStorageCapacityIsolationQuotaMonitoring on filesystem without project quota enabled")

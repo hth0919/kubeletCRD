@@ -43,7 +43,7 @@ import (
 	utiltaints "k8s.io/kubernetes/pkg/util/taints"
 )
 
-const defaultRootDir = "/var/lib/kubelet"
+const defaultRootDir = "/var/lib/keti-kubelet"
 
 // KubeletFlags contains configuration flags for the Kubelet.
 // A configuration field should go in KubeletFlags instead of KubeletConfiguration if any of these are true:

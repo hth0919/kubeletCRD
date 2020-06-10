@@ -49,7 +49,7 @@ func TestMakeMounts(t *testing.T) {
 			podVolumes: kubecontainer.VolumeMap{
 				"disk":  kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/mnt/disk"}},
 				"disk4": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/mnt/host"}},
-				"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/var/lib/kubelet/podID/volumes/empty/disk5"}},
+				"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/var/lib/keti-kubelet/podID/volumes/empty/disk5"}},
 			},
 			container: v1.Container{
 				Name: "container1",
@@ -106,7 +106,7 @@ func TestMakeMounts(t *testing.T) {
 				{
 					Name:           "disk5",
 					ContainerPath:  "/mnt/path5",
-					HostPath:       "/var/lib/kubelet/podID/volumes/empty/disk5",
+					HostPath:       "/var/lib/keti-kubelet/podID/volumes/empty/disk5",
 					ReadOnly:       false,
 					SELinuxRelabel: false,
 					Propagation:    runtimeapi.MountPropagation_PROPAGATION_PRIVATE,
@@ -118,7 +118,7 @@ func TestMakeMounts(t *testing.T) {
 			podVolumes: kubecontainer.VolumeMap{
 				"disk":  kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/mnt/disk"}},
 				"disk4": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/mnt/host"}},
-				"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/var/lib/kubelet/podID/volumes/empty/disk5"}},
+				"disk5": kubecontainer.VolumeInfo{Mounter: &stubVolume{path: "/var/lib/keti-kubelet/podID/volumes/empty/disk5"}},
 			},
 			container: v1.Container{
 				Name: "container1",

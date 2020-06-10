@@ -18,12 +18,12 @@ package secret
 
 import (
 	"fmt"
+	ketiv1 "k8s.io/api/keti/v1"
 	"time"
 
 	v1 "k8s.io/api/core/v1"
 	clientset "k8s.io/client-go/kubernetes"
 	podutil "k8s.io/kubernetes/pkg/api/v1/pod"
-	corev1 "k8s.io/kubernetes/pkg/apis/core/v1"
 	"k8s.io/kubernetes/pkg/kubelet/util/manager"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -62,6 +62,7 @@ func NewSimpleSecretManager(kubeClient clientset.Interface) Manager {
 }
 
 func (s *simpleSecretManager) GetSecret(namespace, name string) (*v1.Secret, error) {
+
 	return s.kubeClient.CoreV1().Secrets(namespace).Get(name, metav1.GetOptions{})
 }
 
@@ -137,15 +138,17 @@ func NewCachingSecretManager(kubeClient clientset.Interface, getTTL manager.GetO
 // - every GetObject() returns a value from local cache propagated via watches
 func NewWatchingSecretManager(kubeClient clientset.Interface) Manager {
 	listSecret := func(namespace string, opts metav1.ListOptions) (runtime.Object, error) {
-		return kubeClient.CoreV1().Secrets(namespace).List(opts)
+		result ,err := kubeClient.KetiV1().Secrets(namespace).List(opts)
+		return (*v1.SecretList)(result), err
 	}
 	watchSecret := func(namespace string, opts metav1.ListOptions) (watch.Interface, error) {
-		return kubeClient.CoreV1().Secrets(namespace).Watch(opts)
+		return kubeClient.KetiV1().Secrets(namespace).Watch(opts)
 	}
 	newSecret := func() runtime.Object {
-		return &v1.Secret{}
+		result := &ketiv1.Secret{}
+		return (*v1.Secret)(result)
 	}
-	gr := corev1.Resource("secret")
+	gr := ketiv1.Resource("secret")
 	return &secretManager{
 		manager: manager.NewWatchBasedManager(listSecret, watchSecret, newSecret, gr, getSecretNames),
 	}

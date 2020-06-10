@@ -441,14 +441,14 @@ func Test_ConstructVolumeSpec(t *testing.T) {
 	}
 	fm := mount.NewFakeMounter(
 		[]mount.MountPoint{
-			{Device: "/dev/sdb", Path: "/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1"},
-			{Device: "/dev/sdb", Path: "/var/lib/kubelet/plugins/kubernetes.io/fc/50060e801049cfd1-lun-0"},
-			{Device: "/dev/sdc", Path: "/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod2"},
-			{Device: "/dev/sdc", Path: "/var/lib/kubelet/plugins/kubernetes.io/fc/volumeDevices/3600508b400105e210000900000490000"},
+			{Device: "/dev/sdb", Path: "/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1"},
+			{Device: "/dev/sdb", Path: "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/50060e801049cfd1-lun-0"},
+			{Device: "/dev/sdc", Path: "/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod2"},
+			{Device: "/dev/sdc", Path: "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/volumeDevices/3600508b400105e210000900000490000"},
 		})
 	mountPaths := []string{
-		"/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1",
-		"/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod2",
+		"/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1",
+		"/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod2",
 	}
 	for _, path := range mountPaths {
 		refs, err := fm.GetMountRefs(path)
@@ -491,10 +491,10 @@ func Test_ConstructVolumeSpec(t *testing.T) {
 func Test_ConstructVolumeSpecNoRefs(t *testing.T) {
 	fm := mount.NewFakeMounter(
 		[]mount.MountPoint{
-			{Device: "/dev/sdd", Path: "/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1"},
+			{Device: "/dev/sdd", Path: "/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1"},
 		})
 	mountPaths := []string{
-		"/var/lib/kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1",
+		"/var/lib/keti-kubelet/pods/some-pod/volumes/kubernetes.io~fc/fc-in-pod1",
 	}
 	for _, path := range mountPaths {
 		refs, _ := fm.GetMountRefs(path)

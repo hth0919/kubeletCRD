@@ -81,7 +81,7 @@ var _ = SIGDescribe("Mount propagation", func() {
 
 	ginkgo.It("should propagate mounts to the host", func() {
 		// This test runs two pods: master and slave with respective mount
-		// propagation on common /var/lib/kubelet/XXXX directory. Both mount a
+		// propagation on common /var/lib/keti-kubelet/XXXX directory. Both mount a
 		// tmpfs to a subdirectory there. We check that these mounts are
 		// propagated to the right places.
 
@@ -102,7 +102,7 @@ var _ = SIGDescribe("Mount propagation", func() {
 		// hostDir is the directory that's shared via HostPath among all pods.
 		// Make sure it's random enough so we don't clash with another test
 		// running in parallel.
-		hostDir := "/var/lib/kubelet/" + f.Namespace.Name
+		hostDir := "/var/lib/keti-kubelet/" + f.Namespace.Name
 		defer func() {
 			cleanCmd := fmt.Sprintf("rm -rf %q", hostDir)
 			hostExec.IssueCommand(cleanCmd, node)

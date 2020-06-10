@@ -106,7 +106,7 @@ var _ = framework.KubeDescribe("Kubelet Volume Manager", func() {
 										VolumeSource: v1.VolumeSource{
 											// TODO: remove hardcoded kubelet volume directory path
 											// framework.TestContext.KubeVolumeDir is currently not populated for node e2e
-											HostPath: &v1.HostPathVolumeSource{Path: "/var/lib/kubelet/pods"},
+											HostPath: &v1.HostPathVolumeSource{Path: "/var/lib/keti-kubelet/pods"},
 										},
 									},
 								},

@@ -90,7 +90,7 @@ const (
 	kubeletPort         = "10250"
 	kubeletReadOnlyPort = "10255"
 	// KubeletRootDirectory specifies the directory where the kubelet runtime information is stored.
-	KubeletRootDirectory = "/var/lib/kubelet"
+	KubeletRootDirectory = "/var/lib/keti-kubelet"
 	// Health check url of kubelet
 	kubeletHealthCheckURL = "http://127.0.0.1:" + kubeletReadOnlyPort + "/healthz"
 )

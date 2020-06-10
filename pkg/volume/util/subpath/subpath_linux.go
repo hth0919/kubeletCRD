@@ -94,8 +94,8 @@ func safeOpenSubPath(mounter mount.Interface, subpath Subpath) (int, error) {
 // Given Subpath must have all paths with already resolved symlinks and with
 // paths relevant to kubelet (when it runs in a container).
 // This function is called also by NsEnterMounter. It works because
-// /var/lib/kubelet is mounted from the host into the container with Kubelet as
-// /var/lib/kubelet too.
+// /var/lib/keti-kubelet is mounted from the host into the container with Kubelet as
+// /var/lib/keti-kubelet too.
 func prepareSubpathTarget(mounter mount.Interface, subpath Subpath) (bool, string, error) {
 	// Early check for already bind-mounted subpath.
 	bindPathTarget := getSubpathBindTarget(subpath)
@@ -113,7 +113,7 @@ func prepareSubpathTarget(mounter mount.Interface, subpath Subpath) (bool, strin
 		return true, bindPathTarget, nil
 	}
 
-	// bindPathTarget is in /var/lib/kubelet and thus reachable without any
+	// bindPathTarget is in /var/lib/keti-kubelet and thus reachable without any
 	// translation even to containerized kubelet.
 	bindParent := filepath.Dir(bindPathTarget)
 	err = os.MkdirAll(bindParent, 0750)
@@ -208,7 +208,7 @@ func doBindSubPath(mounter mount.Interface, subpath Subpath) (hostPath string, e
 
 // This implementation is shared between Linux and NsEnter
 func doCleanSubPaths(mounter mount.Interface, podDir string, volumeName string) error {
-	// scan /var/lib/kubelet/pods/<uid>/volume-subpaths/<volume>/*
+	// scan /var/lib/keti-kubelet/pods/<uid>/volume-subpaths/<volume>/*
 	subPathDir := filepath.Join(podDir, containerSubPathDirectoryName, volumeName)
 	klog.V(4).Infof("Cleaning up subpath mounts for %s", subPathDir)
 
@@ -227,7 +227,7 @@ func doCleanSubPaths(mounter mount.Interface, podDir string, volumeName string) 
 		}
 		klog.V(4).Infof("Cleaning up subpath mounts for container %s", containerDir.Name())
 
-		// scan /var/lib/kubelet/pods/<uid>/volume-subpaths/<volume>/<container name>/*
+		// scan /var/lib/keti-kubelet/pods/<uid>/volume-subpaths/<volume>/<container name>/*
 		fullContainerDirPath := filepath.Join(subPathDir, containerDir.Name())
 		err = filepath.Walk(fullContainerDirPath, func(path string, info os.FileInfo, err error) error {
 			if path == fullContainerDirPath {
@@ -275,7 +275,7 @@ func doCleanSubPaths(mounter mount.Interface, podDir string, volumeName string) 
 
 // doCleanSubPath tears down the single subpath bind mount
 func doCleanSubPath(mounter mount.Interface, fullContainerDirPath, subPathIndex string) error {
-	// process /var/lib/kubelet/pods/<uid>/volume-subpaths/<volume>/<container name>/<subPathName>
+	// process /var/lib/keti-kubelet/pods/<uid>/volume-subpaths/<volume>/<container name>/<subPathName>
 	klog.V(4).Infof("Cleaning up subpath mounts for subpath %v", subPathIndex)
 	fullSubPath := filepath.Join(fullContainerDirPath, subPathIndex)
 

@@ -252,9 +252,9 @@ func checkRbdNbdTools(e utilexec.Interface) bool {
 	return true
 }
 
-// Make a directory like /var/lib/kubelet/plugins/kubernetes.io/rbd/mounts/pool-image-image.
+// Make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/mounts/pool-image-image.
 func makePDNameInternal(host volume.VolumeHost, pool string, image string) string {
-	// Backward compatibility for the deprecated format: /var/lib/kubelet/plugins/kubernetes.io/rbd/rbd/pool-image-image.
+	// Backward compatibility for the deprecated format: /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/rbd/pool-image-image.
 	deprecatedDir := filepath.Join(host.GetPluginDir(rbdPluginName), "rbd", pool+"-image-"+image)
 	info, err := os.Stat(deprecatedDir)
 	if err == nil && info.IsDir() {
@@ -266,7 +266,7 @@ func makePDNameInternal(host volume.VolumeHost, pool string, image string) strin
 	return filepath.Join(host.GetPluginDir(rbdPluginName), volutil.MountsInGlobalPDPath, pool+"-image-"+image)
 }
 
-// Make a directory like /var/lib/kubelet/plugins/kubernetes.io/rbd/volumeDevices/pool-image-image.
+// Make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/volumeDevices/pool-image-image.
 func makeVDPDNameInternal(host volume.VolumeHost, pool string, image string) string {
 	return filepath.Join(host.GetVolumeDevicePluginDir(rbdPluginName), pool+"-image-"+image)
 }

@@ -129,34 +129,34 @@ func TestParsePDName(t *testing.T) {
 	}{
 		{
 			name:  "single WWID",
-			path:  "/var/lib/kubelet/plugins/kubernetes.io/fc/60050763008084e6e0000000000001ae",
+			path:  "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/60050763008084e6e0000000000001ae",
 			wwids: []string{"60050763008084e6e0000000000001ae"},
 		},
 		{
 			name:  "multiple WWID",
-			path:  "/var/lib/kubelet/plugins/kubernetes.io/fc/60050763008084e6e0000000000001ae-60050763008084e6e0000000000001af",
+			path:  "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/60050763008084e6e0000000000001ae-60050763008084e6e0000000000001af",
 			wwids: []string{"60050763008084e6e0000000000001ae", "60050763008084e6e0000000000001af"},
 		},
 		{
 			name: "single WWN",
-			path: "/var/lib/kubelet/plugins/kubernetes.io/fc/50050768030539b6-lun-0",
+			path: "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/50050768030539b6-lun-0",
 			wwns: []string{"50050768030539b6"},
 			lun:  0,
 		},
 		{
 			name: "multiple WWNs",
-			path: "/var/lib/kubelet/plugins/kubernetes.io/fc/50050768030539b6-50050768030539b7-lun-0",
+			path: "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/50050768030539b6-50050768030539b7-lun-0",
 			wwns: []string{"50050768030539b6", "50050768030539b7"},
 			lun:  0,
 		},
 		{
 			name:        "no WWNs",
-			path:        "/var/lib/kubelet/plugins/kubernetes.io/fc/lun-0",
+			path:        "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/lun-0",
 			expectError: true,
 		},
 		{
 			name:        "invalid lun",
-			path:        "/var/lib/kubelet/plugins/kubernetes.io/fc/50050768030539b6-lun-x",
+			path:        "/var/lib/keti-kubelet/plugins/kubernetes.io/fc/50050768030539b6-lun-x",
 			expectError: true,
 		},
 	}

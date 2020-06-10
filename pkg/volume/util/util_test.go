@@ -442,7 +442,7 @@ func TestGetWindowsPath(t *testing.T) {
 		expectedPath string
 	}{
 		{
-			path:         `/var/lib/kubelet/pods/146f8428-83e7-11e7-8dd4-000d3a31dac4/volumes/kubernetes.io~disk`,
+			path:         `/var/lib/keti-kubelet/pods/146f8428-83e7-11e7-8dd4-000d3a31dac4/volumes/kubernetes.io~disk`,
 			expectedPath: `c:\var\lib\kubelet\pods\146f8428-83e7-11e7-8dd4-000d3a31dac4\volumes\kubernetes.io~disk`,
 		},
 		{

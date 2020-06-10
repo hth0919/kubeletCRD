@@ -55,12 +55,12 @@ These methods are called by below sequences:
 
 After successful MountVolume for block volume, directory structure will be like below:
   /dev/loopX ... Descriptor lock(Loopback device to mapFile under global map path)
-  /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/{specName}/dev/ ... Global map path
-  /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/{specName}/dev/{podUID} ... MapFile(Bind mount to publish Path)
-  /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/staging/{specName} ... Staging path
-  /var/lib/kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/{specName}/{podUID} ... Publish path
-  /var/lib/kubelet/pods/{podUID}/volumeDevices/kubernetes.io~csi/ ... Pod device map path
-  /var/lib/kubelet/pods/{podUID}/volumeDevices/kubernetes.io~csi/{specName} ... MapFile(Symlink to publish path)
+  /var/lib/keti-kubelet/plugins/kubernetes.io/csi/volumeDevices/{specName}/dev/ ... Global map path
+  /var/lib/keti-kubelet/plugins/kubernetes.io/csi/volumeDevices/{specName}/dev/{podUID} ... MapFile(Bind mount to publish Path)
+  /var/lib/keti-kubelet/plugins/kubernetes.io/csi/volumeDevices/staging/{specName} ... Staging path
+  /var/lib/keti-kubelet/plugins/kubernetes.io/csi/volumeDevices/publish/{specName}/{podUID} ... Publish path
+  /var/lib/keti-kubelet/pods/{podUID}/volumeDevices/kubernetes.io~csi/ ... Pod device map path
+  /var/lib/keti-kubelet/pods/{podUID}/volumeDevices/kubernetes.io~csi/{specName} ... MapFile(Symlink to publish path)
 */
 
 package csi

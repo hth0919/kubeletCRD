@@ -25,7 +25,7 @@ import (
 
 const (
 	// default directory to store pod sandbox checkpoint files
-	sandboxCheckpointDir = "sandbox"
+	sandboxCheckpointDir = "keti-sandbox"
 	protocolTCP          = Protocol("tcp")
 	protocolUDP          = Protocol("udp")
 	protocolSCTP         = Protocol("sctp")

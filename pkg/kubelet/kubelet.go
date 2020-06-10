@@ -283,7 +283,6 @@ func makePodSourceConfig(kubeCfg *kubeletconfiginternal.KubeletConfiguration, ku
 
 	// define file config source
 	/*if kubeCfg.StaticPodPath != "" {
-
 		klog.Infof("Adding pod path: %v", kubeCfg.StaticPodPath)
 		config.NewSourceFile(kubeCfg.StaticPodPath, nodeName, kubeCfg.FileCheckFrequency.Duration, cfg.Channel(kubetypes.FileSource))
 	}*/
@@ -554,14 +553,17 @@ func NewMainKubelet(kubeCfg *kubeletconfiginternal.KubeletConfiguration,
 	var configMapManager configmap.Manager
 	switch kubeCfg.ConfigMapAndSecretChangeDetectionStrategy {
 	case kubeletconfiginternal.WatchChangeDetectionStrategy:
+		klog.Infoln("CREATE Secret, ConfigManager From : ", kubeletconfiginternal.WatchChangeDetectionStrategy)
 		secretManager = secret.NewWatchingSecretManager(kubeDeps.KubeClient)
 		configMapManager = configmap.NewWatchingConfigMapManager(kubeDeps.KubeClient)
 	case kubeletconfiginternal.TTLCacheChangeDetectionStrategy:
+		klog.Infoln("CREATE Secret, ConfigManager From : ", kubeletconfiginternal.TTLCacheChangeDetectionStrategy)
 		secretManager = secret.NewCachingSecretManager(
 			kubeDeps.KubeClient, manager.GetObjectTTLFromNodeFunc(klet.GetNode))
 		configMapManager = configmap.NewCachingConfigMapManager(
 			kubeDeps.KubeClient, manager.GetObjectTTLFromNodeFunc(klet.GetNode))
 	case kubeletconfiginternal.GetChangeDetectionStrategy:
+		klog.Infoln("CREATE Secret, ConfigManager From : ", kubeletconfiginternal.GetChangeDetectionStrategy)
 		secretManager = secret.NewSimpleSecretManager(kubeDeps.KubeClient)
 		configMapManager = configmap.NewSimpleConfigMapManager(kubeDeps.KubeClient)
 	default:

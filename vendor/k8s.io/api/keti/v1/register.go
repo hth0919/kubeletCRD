@@ -26,8 +26,16 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
 		&Pod{},
 		&PodList{},
+		&Secret{},
+		&SecretList{},
+		&ConfigMap{},
+		&ConfigMapList{},
 	)
 
 	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
 	return nil
+}
+
+func Resource(resource string) schema.GroupResource {
+	return SchemeGroupVersion.WithResource(resource).GroupResource()
 }

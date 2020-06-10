@@ -18,12 +18,12 @@ package configmap
 
 import (
 	"fmt"
+	ketiv1 "k8s.io/api/keti/v1"
 	"time"
 
 	v1 "k8s.io/api/core/v1"
 	clientset "k8s.io/client-go/kubernetes"
 	podutil "k8s.io/kubernetes/pkg/api/v1/pod"
-	corev1 "k8s.io/kubernetes/pkg/apis/core/v1"
 	"k8s.io/kubernetes/pkg/kubelet/util/manager"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -136,15 +136,17 @@ func NewCachingConfigMapManager(kubeClient clientset.Interface, getTTL manager.G
 // - every GetObject() returns a value from local cache propagated via watches
 func NewWatchingConfigMapManager(kubeClient clientset.Interface) Manager {
 	listConfigMap := func(namespace string, opts metav1.ListOptions) (runtime.Object, error) {
-		return kubeClient.CoreV1().ConfigMaps(namespace).List(opts)
+		result ,err := kubeClient.KetiV1().ConfigMaps(namespace).List(opts)
+		return (*v1.ConfigMapList)(result), err
 	}
 	watchConfigMap := func(namespace string, opts metav1.ListOptions) (watch.Interface, error) {
-		return kubeClient.CoreV1().ConfigMaps(namespace).Watch(opts)
+		return kubeClient.KetiV1().ConfigMaps(namespace).Watch(opts)
 	}
 	newConfigMap := func() runtime.Object {
-		return &v1.ConfigMap{}
+		result := &ketiv1.ConfigMap{}
+		return (*v1.ConfigMap)(result)
 	}
-	gr := corev1.Resource("configmap")
+	gr := ketiv1.Resource("configmap")
 	return &configMapManager{
 		manager: manager.NewWatchBasedManager(listConfigMap, watchConfigMap, newConfigMap, gr, getConfigMapNames),
 	}

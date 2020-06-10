@@ -33,20 +33,17 @@ import (
 func NewSourceApiserver(c clientset.Interface, nodeName types.NodeName, updates chan<- interface{}) {
 	lw := cache.NewListWatchFromClient(c.KetiV1().RESTClient(), "pods", metav1.NamespaceAll, fields.Everything())
 	klog.Infoln(lw.List(metav1.ListOptions{}))
-	newSourceApiserverFromLW(c, lw, nodeName, updates)
+	newSourceApiserverFromLW(lw, nodeName, updates)
 }
 
 // newSourceApiserverFromLW holds creates a config source that watches and pulls from the apiserver.
-func newSourceApiserverFromLW(c clientset.Interface,lw cache.ListerWatcher, nodeName types.NodeName, updates chan<- interface{}) {
+func newSourceApiserverFromLW(lw cache.ListerWatcher, nodeName types.NodeName, updates chan<- interface{}) {
 	send := func(objs []interface{}) {
 		var pods []*corev1.Pod
 		var pod *corev1.Pod
 		for _, o := range objs {
 			pod = (*corev1.Pod)(o.(*ketiv1.Pod))
 			pod.APIVersion = "v1"
-			klog.Infoln("BEFORE : ", pod.Spec)
-			pod.Spec = podConstructor(c, o.(*ketiv1.Pod))
-			klog.Infoln("AFTER : ", pod.Spec)
 			if pod.Spec.NodeName == string(nodeName) {
 				pods = append(pods, pod)
 			}
@@ -55,32 +52,4 @@ func newSourceApiserverFromLW(c clientset.Interface,lw cache.ListerWatcher, node
 	}
 	r := cache.NewReflector(lw, &ketiv1.Pod{}, cache.NewUndeltaStore(send, cache.MetaNamespaceKeyFunc), 0)
 	go r.Run(wait.NeverStop)
-}
-
-func podConstructor(c clientset.Interface, pod *ketiv1.Pod) corev1.PodSpec{
-	corepod := &corev1.Pod{
-		TypeMeta:   metav1.TypeMeta{
-			Kind:       "pod",
-			APIVersion: "v1",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:                       pod.Name,
-			Namespace:                  pod.Namespace,
-		},
-		Spec:       corev1.PodSpec{},
-		Status:     corev1.PodStatus{},
-	}
-	corepodSpec := pod.Spec
-	corepod.Spec = corepodSpec
-	klog.Infoln(corepod)
-	corepod, err := c.CoreV1().Pods(pod.Namespace).Create(corepod)
-	if err != nil {
-		klog.Infoln(err)
-	}
-	result := corepod.Spec
-	err = c.CoreV1().Pods(pod.Namespace).Delete(pod.Name, &metav1.DeleteOptions{})
-	if err != nil {
-		klog.Infoln(err)
-	}
-	return result
 }

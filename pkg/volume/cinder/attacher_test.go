@@ -76,7 +76,7 @@ func TestGetDeviceName_PersistentVolume(t *testing.T) {
 func TestGetDeviceMountPath(t *testing.T) {
 	name := "cinder-volume-id"
 	spec := createVolSpec(name, false)
-	rootDir := "/var/lib/kubelet/"
+	rootDir := "/var/lib/keti-kubelet/"
 	host := volumetest.NewFakeVolumeHost(rootDir, nil, nil)
 
 	attacher := &cinderDiskAttacher{

@@ -200,6 +200,7 @@ func (rc *reconciler) reconcile() {
 					klog.Infof(mountedVolume.GenerateMsgDetailed("operationExecutor.UnmountVolume started", ""))
 				}
 			}
+			continueFlag =  false
 		}
 	}
 
@@ -308,6 +309,7 @@ func (rc *reconciler) reconcile() {
 					klog.V(4).Infof(volumeToMount.GenerateMsgDetailed("operationExecutor.ExpandInUseVolume started", ""))
 				}
 			}
+			continueFlag = false
 		}
 	}
 

@@ -27,7 +27,6 @@ import (
 
 	v1 "k8s.io/api/core/v1"
 	apiequality "k8s.io/apimachinery/pkg/api/equality"
-	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/types"
@@ -61,9 +60,9 @@ func (kl *Kubelet) registerWithAPIServer() {
 			step = 7 * time.Second
 		}
 
-		node, err := kl.initialNode(context.TODO())
+		node, err :=  kl.kubeClient.CoreV1().Nodes().Get(string(kl.nodeName), metav1.GetOptions{})
 		if err != nil {
-			klog.Errorf("Unable to construct v1.Node object for kubelet: %v", err)
+			klog.Errorf("%v", err)
 			continue
 		}
 
@@ -83,7 +82,7 @@ func (kl *Kubelet) registerWithAPIServer() {
 // value of the annotation for controller-managed attach-detach of attachable
 // persistent volumes for the node.
 func (kl *Kubelet) tryRegisterWithAPIServer(node *v1.Node) bool {
-	_, err := kl.kubeClient.CoreV1().Nodes().Create(node)
+	/*_, err := kl.kubeClient.CoreV1().Nodes().Create(node)
 	if err == nil {
 		return true
 	}
@@ -91,19 +90,19 @@ func (kl *Kubelet) tryRegisterWithAPIServer(node *v1.Node) bool {
 	if !apierrors.IsAlreadyExists(err) {
 		klog.Errorf("Unable to register node %q with API server: %v", kl.nodeName, err)
 		return false
-	}
+	}*/
 
-	existingNode, err := kl.kubeClient.CoreV1().Nodes().Get(string(kl.nodeName), metav1.GetOptions{})
+	node, err := kl.kubeClient.CoreV1().Nodes().Get(string(kl.nodeName), metav1.GetOptions{})
 	if err != nil {
 		klog.Errorf("Unable to register node %q with API server: error getting existing node: %v", kl.nodeName, err)
 		return false
 	}
-	if existingNode == nil {
+	if node == nil {
 		klog.Errorf("Unable to register node %q with API server: no node instance returned", kl.nodeName)
 		return false
 	}
 
-	originalNode := existingNode.DeepCopy()
+	originalNode := node.DeepCopy()
 	if originalNode == nil {
 		klog.Errorf("Nil %q node object", kl.nodeName)
 		return false
@@ -111,7 +110,7 @@ func (kl *Kubelet) tryRegisterWithAPIServer(node *v1.Node) bool {
 
 	klog.Infof("Node %s was previously registered", kl.nodeName)
 
-	// Edge case: the node was previously registered; reconcile
+	/*// Edge case: the node was previously registered; reconcile
 	// the value of the controller-managed attach-detach
 	// annotation.
 	requiresUpdate := kl.reconcileCMADAnnotationWithExistingNode(node, existingNode)
@@ -123,7 +122,7 @@ func (kl *Kubelet) tryRegisterWithAPIServer(node *v1.Node) bool {
 			return false
 		}
 	}
-
+*/
 	return true
 }
 

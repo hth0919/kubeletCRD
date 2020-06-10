@@ -53,10 +53,10 @@ func TestIsSharedSuccess(t *testing.T) {
 		expectedResult bool
 	}{
 		{
-			// /var/lib/kubelet is a directory on mount '/' that is shared
+			// /var/lib/keti-kubelet is a directory on mount '/' that is shared
 			// This is the most common case.
 			"shared",
-			"/var/lib/kubelet",
+			"/var/lib/keti-kubelet",
 			true,
 		},
 		{

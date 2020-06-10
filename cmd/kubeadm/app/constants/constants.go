@@ -235,7 +235,7 @@ const (
 	KubeletBaseConfigMapRolePrefix = "kubeadm:kubelet-config-"
 
 	// KubeletRunDirectory specifies the directory where the kubelet runtime information is stored.
-	KubeletRunDirectory = "/var/lib/kubelet"
+	KubeletRunDirectory = "/var/lib/keti-kubelet"
 
 	// KubeletConfigurationFileName specifies the file name on the node which stores initial remote configuration of kubelet
 	// This file should exist under KubeletRunDirectory

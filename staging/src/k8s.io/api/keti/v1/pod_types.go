@@ -24,3 +24,26 @@ type PodList struct {
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []Pod `json:"items"`
 }
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// Secret holds secret data of a certain type. The total bytes of the values in
+// the Data field must be less than MaxSecretSize bytes.
+type Secret corev1.Secret
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// SecretList is a list of Secret.
+type SecretList corev1.SecretList
+
+// +genclient
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ConfigMap holds configuration data for pods to consume.
+type ConfigMap corev1.ConfigMap
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+// ConfigMapList is a resource containing a list of ConfigMap objects.
+type ConfigMapList corev1.ConfigMapList

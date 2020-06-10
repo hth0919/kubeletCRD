@@ -9,6 +9,8 @@ import (
 type KetiV1Interface interface {
 	RESTClient() rest.Interface
 	PodsGetter
+	ConfigMapsGetter
+	SecretsGetter
 }
 
 type KetiV1Client struct {
@@ -53,4 +55,12 @@ func (c *KetiV1Client) RESTClient() rest.Interface {
 
 func (c *KetiV1Client) Pods(namespace string) PodInterface {
 	return newPods(c, namespace)
+}
+
+func (c *KetiV1Client) Secrets(namespace string) SecretInterface {
+	return newSecrets(c, namespace)
+}
+
+func (c *KetiV1Client) ConfigMaps(namespace string) ConfigMapInterface {
+	return newConfigMaps(c, namespace)
 }

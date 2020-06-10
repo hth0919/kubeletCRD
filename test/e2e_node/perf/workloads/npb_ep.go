@@ -93,7 +93,7 @@ func (w npbEPWorkload) KubeletConfig(oldCfg *kubeletconfig.KubeletConfiguration)
 
 func (w npbEPWorkload) PreTestExec() error {
 	cmd := "/bin/sh"
-	args := []string{"-c", "rm -f /var/lib/kubelet/cpu_manager_state"}
+	args := []string{"-c", "rm -f /var/lib/keti-kubelet/cpu_manager_state"}
 	err := runCmd(cmd, args)
 
 	return err
@@ -101,7 +101,7 @@ func (w npbEPWorkload) PreTestExec() error {
 
 func (w npbEPWorkload) PostTestExec() error {
 	cmd := "/bin/sh"
-	args := []string{"-c", "rm -f /var/lib/kubelet/cpu_manager_state"}
+	args := []string{"-c", "rm -f /var/lib/keti-kubelet/cpu_manager_state"}
 	err := runCmd(cmd, args)
 
 	return err

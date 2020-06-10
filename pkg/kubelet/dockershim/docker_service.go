@@ -63,10 +63,10 @@ const (
 	// TODO: This is not backward compatible with older containers. We will
 	// need to add filtering based on names.
 	containerTypeLabelKey       = "io.kubernetes.docker.type"
-	containerTypeLabelSandbox   = "podsandbox"
-	containerTypeLabelContainer = "container"
+	containerTypeLabelSandbox   = "keti-podsandbox"
+	containerTypeLabelContainer = "keti-container"
 	containerLogPathLabelKey    = "io.kubernetes.container.logpath"
-	sandboxIDLabelKey           = "io.kubernetes.sandbox.id"
+	sandboxIDLabelKey           = "io.keti-kubernetes.sandbox.id"
 
 	// The expiration time of version cache.
 	versionCacheTTL = 60 * time.Second

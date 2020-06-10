@@ -204,7 +204,7 @@ func (b *secretVolumeMounter) SetUpAt(dir string, mounterArgs volume.MounterArgs
 	}
 
 	totalBytes := totalSecretBytes(secret)
-	klog.V(3).Infof("Received secret %v/%v containing (%v) pieces of data, %v total bytes",
+	klog.Infof("Received secret %v/%v containing (%v) pieces of data, %v total bytes",
 		b.pod.Namespace,
 		b.source.SecretName,
 		len(secret.Data),

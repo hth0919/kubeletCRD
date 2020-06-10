@@ -132,7 +132,7 @@ func scsiHostRescan(io ioHandler) {
 	}
 }
 
-// make a directory like /var/lib/kubelet/plugins/kubernetes.io/fc/target1-target2-lun-0
+// make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/fc/target1-target2-lun-0
 func makePDNameInternal(host volume.VolumeHost, wwns []string, lun string, wwids []string) string {
 	if len(wwns) != 0 {
 		w := strings.Join(wwns, "-")
@@ -141,7 +141,7 @@ func makePDNameInternal(host volume.VolumeHost, wwns []string, lun string, wwids
 	return filepath.Join(host.GetPluginDir(fcPluginName), strings.Join(wwids, "-"))
 }
 
-// make a directory like /var/lib/kubelet/plugins/kubernetes.io/fc/volumeDevices/target-lun-0
+// make a directory like /var/lib/keti-kubelet/plugins/kubernetes.io/fc/volumeDevices/target-lun-0
 func makeVDPDNameInternal(host volume.VolumeHost, wwns []string, lun string, wwids []string) string {
 	if len(wwns) != 0 {
 		w := strings.Join(wwns, "-")

@@ -414,10 +414,10 @@ var _ volume.DeviceUnmounter = &deviceMounter{}
 
 func (dm *deviceMounter) UnmountDevice(deviceMountPath string) error {
 	// If the local PV is a block device,
-	// The deviceMountPath is generated to the format like :/var/lib/kubelet/plugins/kubernetes.io/local-volume/mounts/localpv.spec.Name;
+	// The deviceMountPath is generated to the format like :/var/lib/keti-kubelet/plugins/kubernetes.io/local-volume/mounts/localpv.spec.Name;
 	// If it is a filesystem directory, then the deviceMountPath is set directly to pvSpec.Local.Path
 	// We only need to unmount block device here, so we need to check if the deviceMountPath passed here
-	// has base mount path: /var/lib/kubelet/plugins/kubernetes.io/local-volume/mounts
+	// has base mount path: /var/lib/keti-kubelet/plugins/kubernetes.io/local-volume/mounts
 	basemountPath := dm.plugin.generateBlockDeviceBaseGlobalPath()
 	if mount.PathWithinBase(deviceMountPath, basemountPath) {
 		return mount.CleanupMountPoint(deviceMountPath, dm.mounter, false)

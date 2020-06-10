@@ -231,7 +231,7 @@ type attachedVolume struct {
 	// Used to generate the volume plugin object, and passed to plugin methods.
 	// In particular, the Unmount method uses spec.Name() as the volumeSpecName
 	// in the mount path:
-	// /var/lib/kubelet/pods/{podUID}/volumes/{escapeQualifiedPluginName}/{volumeSpecName}/
+	// /var/lib/keti-kubelet/pods/{podUID}/volumes/{escapeQualifiedPluginName}/{volumeSpecName}/
 	spec *volume.Spec
 
 	// pluginName is the Unescaped Qualified name of the volume plugin used to
@@ -278,7 +278,7 @@ type mountedPod struct {
 	// Used to generate the volume plugin object, and passed to plugin methods.
 	// In particular, the Unmount method uses spec.Name() as the volumeSpecName
 	// in the mount path:
-	// /var/lib/kubelet/pods/{podUID}/volumes/{escapeQualifiedPluginName}/{volumeSpecName}/
+	// /var/lib/keti-kubelet/pods/{podUID}/volumes/{escapeQualifiedPluginName}/{volumeSpecName}/
 	volumeSpec *volume.Spec
 
 	// outerVolumeSpecName is the volume.Spec.Name() of the volume as referenced

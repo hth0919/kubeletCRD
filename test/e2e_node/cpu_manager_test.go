@@ -124,7 +124,7 @@ func waitForContainerRemoval(containerName, podName, podNS string) {
 
 func waitForStateFileCleanedUp() {
 	gomega.Eventually(func() bool {
-		restoredState, err := cpumanagerstate.NewCheckpointState("/var/lib/kubelet", "cpu_manager_state", "static")
+		restoredState, err := cpumanagerstate.NewCheckpointState("/var/lib/keti-kubelet", "cpu_manager_state", "static")
 		framework.ExpectNoError(err, "failed to create testing cpumanager state instance")
 		assignments := restoredState.GetCPUAssignments()
 		if len(assignments) == 0 {
@@ -151,7 +151,7 @@ func getCPUSiblingList(cpuRes int64) string {
 }
 
 func deleteStateFile() {
-	err := exec.Command("/bin/sh", "-c", "rm -f /var/lib/kubelet/cpu_manager_state").Run()
+	err := exec.Command("/bin/sh", "-c", "rm -f /var/lib/keti-kubelet/cpu_manager_state").Run()
 	framework.ExpectNoError(err, "error deleting state file")
 }
 

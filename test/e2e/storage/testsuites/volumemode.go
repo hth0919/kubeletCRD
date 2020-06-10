@@ -442,14 +442,14 @@ func swapVolumeMode(podTemplate *v1.Pod) *v1.Pod {
 	return pod
 }
 
-// listPodVolumePluginDirectory returns all volumes in /var/lib/kubelet/pods/<pod UID>/volumes/* and
-// /var/lib/kubelet/pods/<pod UID>/volumeDevices/*
+// listPodVolumePluginDirectory returns all volumes in /var/lib/keti-kubelet/pods/<pod UID>/volumes/* and
+// /var/lib/keti-kubelet/pods/<pod UID>/volumeDevices/*
 // Sample output:
-//   /var/lib/kubelet/pods/a4717a30-000a-4081-a7a8-f51adf280036/volumes/kubernetes.io~secret/default-token-rphdt
-//   /var/lib/kubelet/pods/4475b7a3-4a55-4716-9119-fd0053d9d4a6/volumeDevices/kubernetes.io~aws-ebs/pvc-5f9f80f5-c90b-4586-9966-83f91711e1c0
+//   /var/lib/keti-kubelet/pods/a4717a30-000a-4081-a7a8-f51adf280036/volumes/kubernetes.io~secret/default-token-rphdt
+//   /var/lib/keti-kubelet/pods/4475b7a3-4a55-4716-9119-fd0053d9d4a6/volumeDevices/kubernetes.io~aws-ebs/pvc-5f9f80f5-c90b-4586-9966-83f91711e1c0
 func listPodVolumePluginDirectory(h utils.HostExec, pod *v1.Pod, node *v1.Node) (mounts []string, devices []string, err error) {
-	mountPath := filepath.Join("/var/lib/kubelet/pods/", string(pod.UID), "volumes")
-	devicePath := filepath.Join("/var/lib/kubelet/pods/", string(pod.UID), "volumeDevices")
+	mountPath := filepath.Join("/var/lib/keti-kubelet/pods/", string(pod.UID), "volumes")
+	devicePath := filepath.Join("/var/lib/keti-kubelet/pods/", string(pod.UID), "volumeDevices")
 
 	mounts, err = listPodDirectory(h, mountPath, node)
 	if err != nil {
@@ -472,7 +472,7 @@ func listPodDirectory(h utils.HostExec, path string, node *v1.Node) ([]string, e
 	// The directory either exists or a real error happened (e.g. "access denied").
 	// Ignore the error, "find" will hit the error again and we report it there.
 
-	// Inside /var/lib/kubelet/pods/<pod>/volumes, look for <volume_plugin>/<volume-name>, hence depth 2
+	// Inside /var/lib/keti-kubelet/pods/<pod>/volumes, look for <volume_plugin>/<volume-name>, hence depth 2
 	cmd := fmt.Sprintf("find %s -mindepth 2 -maxdepth 2", path)
 	out, err := h.IssueCommandWithResult(cmd, node)
 	if err != nil {

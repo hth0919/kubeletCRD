@@ -240,7 +240,7 @@ var _ = framework.KubeDescribe("NodeProblemDetector [NodeFeature:NodeProblemDete
 			framework.ExpectNoError(err)
 			// TODO: remove hardcoded kubelet volume directory path
 			// framework.TestContext.KubeVolumeDir is currently not populated for node e2e
-			hostLogFile = "/var/lib/kubelet/pods/" + string(pod.UID) + "/volumes/kubernetes.io~empty-dir" + logFile
+			hostLogFile = "/var/lib/keti-kubelet/pods/" + string(pod.UID) + "/volumes/kubernetes.io~empty-dir" + logFile
 		})
 
 		ginkgo.It("should generate node condition and events for corresponding errors", func() {

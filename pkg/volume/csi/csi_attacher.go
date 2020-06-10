@@ -568,12 +568,12 @@ func makeDeviceMountPath(plugin *csiPlugin, spec *volume.Spec) (string, error) {
 }
 
 func getDriverAndVolNameFromDeviceMountPath(k8s kubernetes.Interface, deviceMountPath string) (string, string, error) {
-	// deviceMountPath structure: /var/lib/kubelet/plugins/kubernetes.io/csi/pv/{pvname}/globalmount
+	// deviceMountPath structure: /var/lib/keti-kubelet/plugins/kubernetes.io/csi/pv/{pvname}/globalmount
 	dir := filepath.Dir(deviceMountPath)
 	if file := filepath.Base(deviceMountPath); file != globalMountInGlobalPath {
 		return "", "", errors.New(log("getDriverAndVolNameFromDeviceMountPath failed, path did not end in %s", globalMountInGlobalPath))
 	}
-	// dir is now /var/lib/kubelet/plugins/kubernetes.io/csi/pv/{pvname}
+	// dir is now /var/lib/keti-kubelet/plugins/kubernetes.io/csi/pv/{pvname}
 	pvName := filepath.Base(dir)
 
 	// Get PV and check for errors

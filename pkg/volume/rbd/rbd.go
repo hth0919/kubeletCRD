@@ -393,14 +393,14 @@ func (plugin *rbdPlugin) ConstructVolumeSpec(volumeName, mountPath string) (*vol
 	s := dstrings.Split(sourceName, "-image-")
 	if len(s) != 2 {
 		// The mountPath parameter is the volume mount path for a specific pod, its format
-		// is /var/lib/kubelet/pods/{podUID}/volumes/{volumePluginName}/{volumeName}.
+		// is /var/lib/keti-kubelet/pods/{podUID}/volumes/{volumePluginName}/{volumeName}.
 		// mounter.GetDeviceNameFromMount will find the device path(such as /dev/rbd0) by
 		// mountPath first, and then try to find the global device mount path from the mounted
 		// path list of this device. sourceName is extracted from this global device mount path.
 		// mounter.GetDeviceNameFromMount expects the global device mount path conforms to canonical
-		// format: /var/lib/kubelet/plugins/kubernetes.io/rbd/mounts/{pool}-image-{image}.
+		// format: /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/mounts/{pool}-image-{image}.
 		// If this assertion failed, it means that the global device mount path is created by
-		// the deprecated format: /var/lib/kubelet/plugins/kubernetes.io/rbd/rbd/{pool}-image-{image}.
+		// the deprecated format: /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/rbd/{pool}-image-{image}.
 		// So we will try to check whether this old style global device mount path exist or not.
 		// If existed, extract the sourceName from this old style path, otherwise return an error.
 		klog.V(3).Infof("SourceName %s wrong, fallback to old format", sourceName)
@@ -554,7 +554,7 @@ func (plugin *rbdPlugin) getDeviceNameFromOldMountPath(mounter mount.Interface, 
 		return "", err
 	}
 	// baseMountPath is the prefix of deprecated device global mounted path,
-	// such as: /var/lib/kubelet/plugins/kubernetes.io/rbd/rbd
+	// such as: /var/lib/keti-kubelet/plugins/kubernetes.io/rbd/rbd
 	baseMountPath := filepath.Join(plugin.host.GetPluginDir(rbdPluginName), "rbd")
 	for _, ref := range refs {
 		if dstrings.HasPrefix(ref, baseMountPath) {

@@ -21,5 +21,5 @@ package leaky
 const (
 	// PodInfraContainerName is used in a few places outside of Kubelet, such as indexing
 	// into the container info.
-	PodInfraContainerName = "POD"
+	PodInfraContainerName = "MIGRATION-POD"
 )
